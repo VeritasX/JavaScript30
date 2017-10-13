@@ -75,30 +75,48 @@
     const hour_hand = document.querySelector('.hour-hand');
     const min_hand = document.querySelector('.min-hand');
 
-    function hours(now){
-      const hours = now.getHours();
-      const hoursDegrees = ((hours / 12 ) * 360) + 90;
-      hour_hand.style.transform = `rotate(${hoursDegrees}deg)`;
-    }
+    // function hours(now){
+    //   const hours = now.getHours();
+    //   const hoursDegrees = ((hours / 12 ) * 360) + 90;
+    //   hour_hand.style.transform = `rotate(${hoursDegrees}deg)`;
+    // }
 
-    function seconds(now){
-      const seconds = now.getSeconds();
-      const secondsDegrees = ((seconds / 60 ) * 360) + 90;
-      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
-    }
+    // function seconds(now){
+    //   const seconds = now.getSeconds();
+    //   const secondsDegrees = ((seconds / 60 ) * 360) + 90;
+    //   secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+    // }
 
-    function minutes(now){
-      const minutes = now.getMinutes();
-      const minutesDegrees = ((minutes / 60 ) * 360) + 90;
-      min_hand.style.transform = `rotate(${minutesDegrees}deg)`;
-    }
+    // function minutes(now){
+    //   const minutes = now.getMinutes();
+    //   const minutesDegrees = ((minutes / 60 ) * 360) + 90;
+    //   min_hand.style.transform = `rotate(${minutesDegrees}deg)`;
+    // }
 
+    function updateTime(now, timeQuery, divisor, hand){
+      let time;
+      switch(timeQuery){
+        case 'hours':
+        time = now.getHours();
+        break;
+        case 'minutes':
+        time = now.getMinutes();
+        break;
+        case 'seconds':
+        time = now.getSeconds();
+        break;
+        default:
+        console.error('woops no time specified');
+      }
+      const timeDegrees = ((time / divisor ) * 360) +90;
+      hand.style.transform = `rotate(${timeDegrees}deg)`;
+    }
 
     function setDate(){
       const now = new Date();
-      seconds(now);
-      hours(now);
-      minutes(now);
+      updateTime(now, 'hours', 12, hour_hand);
+      updateTime(now, 'minutes', 60, min_hand);
+      updateTime(now, 'seconds', 60, secondHand);
     }
 
 
